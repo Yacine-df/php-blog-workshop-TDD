@@ -77,6 +77,18 @@ class Post
 
     }
 
+    public function changeTitle(string $title){
+
+        $this->setTitle($title);
+
+    }
+
+    public function editBody(string $body){
+
+        $this->setBody($body);
+
+    }
+
     public function getId(){
 
         return $this->id;

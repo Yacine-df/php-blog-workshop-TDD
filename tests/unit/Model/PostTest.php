@@ -129,6 +129,36 @@ class PostTest extends TestCase{
         $post->markAsDrafted();
 
     }
+
+    public function testChangeTitle(){
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+
+        $post->changeTitle('title has been changed');
+
+        $this->assertEquals('title has been changed', $post->getTitle());
+
+    }
+
+    public function testEditBody(){
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+
+        $post->editBody('the body has been edited');
+
+        $this->assertEquals('the body has been edited', $post->getBody());
+
+    }
     
 }
 
