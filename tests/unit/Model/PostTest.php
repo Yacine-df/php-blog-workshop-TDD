@@ -191,6 +191,49 @@ class PostTest extends TestCase{
 
 
     }
+
+    public function testAddingTag(){
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+        $post->addTag('programming');
+
+        $this->assertTrue($post->hasTag('programming'));
+
+    }
+
+    public function testThrowsWhenTryToAddMoreThen4Tags(){
+
+        $this->expectException(DomainException::class);
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code', 'TDD'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+
+        $post->addTag('programming');
+
+    }
+    public function testDeleteTag(){
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code', 'TDD'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+
+        $post->deleteTag('programming');
+
+        $this->assertFalse($post->hasTag('programming'));
+
+    }
    
     
 }
