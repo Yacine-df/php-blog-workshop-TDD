@@ -139,7 +139,7 @@ class PostTest extends TestCase{
 
         $post = Post::publish($title, $body, $tags, $author);
 
-        $post->changeTitle('title has been changed');
+        $post->changeTitle('title has been changed','yacine');
 
         $this->assertEquals('title has been changed', $post->getTitle());
 
@@ -154,11 +154,44 @@ class PostTest extends TestCase{
 
         $post = Post::publish($title, $body, $tags, $author);
 
-        $post->editBody('the body has been edited');
+        $post->editBody('the body has been edited', 'yacine');
 
         $this->assertEquals('the body has been edited', $post->getBody());
 
     }
+
+    public function testChangeTitleOnlyByTheAuthorOfThePost(){
+
+        $this->expectException(DomainException::class);
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+
+        $post->changeTitle('new title here', 'foo');
+
+
+    }
+
+    public function testEditBodyOnlyByTheAuthorOfThePost(){
+
+        $this->expectException(DomainException::class);
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+
+        $post->editBody('new body goes here', 'foo');
+
+
+    }
+   
     
 }
 

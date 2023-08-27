@@ -77,15 +77,33 @@ class Post
 
     }
 
-    public function changeTitle(string $title){
+    public function changeTitle(string $title, string $author){
+
+        if (! $this->isWrittenByAuthor($author)) {
+            
+            throw new DomainException();
+
+        }
 
         $this->setTitle($title);
 
     }
 
-    public function editBody(string $body){
+    public function editBody(string $body, string $author){
+
+        if (! $this->isWrittenByAuthor($author)) {
+            
+            throw new DomainException();
+
+        }
 
         $this->setBody($body);
+
+    }
+
+    public function isWrittenByAuthor($author){
+
+        return $this->author === $author;
 
     }
 
