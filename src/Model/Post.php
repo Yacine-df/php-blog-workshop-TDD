@@ -77,6 +77,32 @@ class Post
 
     }
 
+    public function addTag(string $tag){
+
+        if (count($this->tags) >= 4 ) {
+            return throw new DomainException('your adding more then 4 TAGS allowed just 4');
+        }
+
+        if (! $this->hasTag($tag)) {
+            $this->tags[] = $tag; 
+        }
+
+    }
+
+    public function hasTag(string $tag){
+
+        return in_array($tag, $this->tags);
+
+    }
+
+    public function deleteTag(string $tag){
+
+        if ($this->hasTag($tag)) {
+            unset($this->tags[$tag]);
+        }
+
+    }
+
     public function changeTitle(string $title, string $author){
 
         if (! $this->isWrittenByAuthor($author)) {
