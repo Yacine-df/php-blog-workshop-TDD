@@ -3,6 +3,7 @@
 namespace  BlogTest\Unit;
 
 use Blog\Model\Post;
+use DateTimeImmutable;
 use DomainException;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -234,7 +235,56 @@ class PostTest extends TestCase{
         $this->assertFalse($post->hasTag('programming'));
 
     }
-   
+
+    public function testSetCreatedAtOnInitialPublish(){
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code', 'TDD'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+        $this->assertInstanceOf(DateTimeImmutable::class, $post->getCreatedAt());
+        $this->assertEquals('28/08/2023', $post->getCreatedAt()->format('d/m/Y'));
+
+    }
+    public function testSetCreatedAtOnInitialDraft(){
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code', 'TDD'];
+        $author = 'yacine';
+
+        $post = Post::draft($title, $body, $tags, $author);
+        $this->assertInstanceOf(DateTimeImmutable::class, $post->getCreatedAt());
+        $this->assertEquals('28/08/2023', $post->getCreatedAt()->format('d/m/Y'));
+
+    }
+    public function testSetUpdatedAtOnSwitchingFromDraftToPublish(){
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code', 'TDD'];
+        $author = 'yacine';
+
+        $post = Post::draft($title, $body, $tags, $author);
+        $post->markAsPublished();
+        $this->assertInstanceOf(DateTimeImmutable::class, $post->getUpdatedAt());
+
+    }
+    
+    public function testSetUpdatedAtOnChangingTitle(){
+
+        $title = "endis id.";
+        $body = "fdfsdf";
+        $tags = ['php','db','code', 'TDD'];
+        $author = 'yacine';
+
+        $post = Post::publish($title, $body, $tags, $author);
+        $post->changeTitle('new title here', 'yacine');
+        $this->assertInstanceOf(DateTimeImmutable::class, $post->getUpdatedAt());
+
+    }
     
 }
 

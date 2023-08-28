@@ -2,19 +2,23 @@
 
 namespace Blog\Model;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use DomainException;
 use InvalidArgumentException;
 
 class Post
 {
-    private $id;
-    private $title;
-    private $tags;
-    private $body;
-    private $status;
-    private $author;
+    private string $id;
+    private string $title;
+    private array $tags;
+    private string $body;
+    private string $status;
+    private string $author;
+    private DateTimeImmutable $createdAt;
+    private DateTimeImmutable $updatedAt;
 
-    private function __construct(string $title, string $body,array $tags = [], string $author, $status){
+    private function __construct(string $title, string $body, array $tags = [], string $author, string $status){
 
         $this->setTitle($title);
         $this->setBody($body);
@@ -27,6 +31,8 @@ class Post
     public static function publish($title, $body, $tags, $author){
 
         $post = new Post($title, $body, $tags, $author, 'publish');
+
+        $post->setCreatedAt();
 
         return $post;
 
@@ -45,6 +51,7 @@ class Post
             throw new DomainException();
             
         }
+        $this->setUpdatedAt();
 
         return $this->status = "publish";
 
@@ -53,6 +60,8 @@ class Post
     public static function draft($title, $body, $tags, $author){
 
         $post = new Post( $title,  $body, $tags = [],  $author, 'draft');
+
+        $post->setCreatedAt();
 
         return $post;
 
@@ -72,7 +81,7 @@ class Post
             throw new DomainException();
 
         }
-
+        $this->setUpdatedAt();
         return $this->status = "draft";
 
     }
@@ -84,6 +93,7 @@ class Post
         }
 
         if (! $this->hasTag($tag)) {
+            $this->setUpdatedAt();
             $this->tags[] = $tag; 
         }
 
@@ -98,6 +108,7 @@ class Post
     public function deleteTag(string $tag){
 
         if ($this->hasTag($tag)) {
+            $this->setUpdatedAt();
             unset($this->tags[$tag]);
         }
 
@@ -111,6 +122,8 @@ class Post
 
         }
 
+        $this->setUpdatedAt();
+
         $this->setTitle($title);
 
     }
@@ -122,6 +135,8 @@ class Post
             throw new DomainException();
 
         }
+
+        $this->setUpdatedAt();
 
         $this->setBody($body);
 
@@ -189,6 +204,26 @@ class Post
     public function getBody(){
 
         return $this->body;
+
+    }
+    public function getCreatedAt(){
+
+        return $this->createdAt;
+
+    }
+    private function setCreatedAt(){
+
+        $this->createdAt = new DateTimeImmutable("now", new DateTimeZone('Africa/Algiers'));
+
+    }
+    public function getUpdatedAt(){
+
+        return $this->updatedAt;
+
+    }
+    private function setUpdatedAt(){
+
+        $this->updatedAt = new DateTimeImmutable("now", new DateTimeZone('Africa/Algiers'));
 
     }
     
