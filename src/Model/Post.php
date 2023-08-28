@@ -14,11 +14,11 @@ class Post
     private array $tags;
     private string $body;
     private string $status;
-    private string $author;
+    private Author $author;
     private DateTimeImmutable $createdAt;
     private DateTimeImmutable $updatedAt;
 
-    private function __construct(string $title, string $body, array $tags = [], string $author, string $status){
+    private function __construct(string $title, string $body, array $tags = [], Author $author, string $status){
 
         $this->setTitle($title);
         $this->setBody($body);
@@ -114,7 +114,7 @@ class Post
 
     }
 
-    public function changeTitle(string $title, string $author){
+    public function changeTitle(string $title, Author $author){
 
         if (! $this->isWrittenByAuthor($author)) {
             
@@ -128,7 +128,7 @@ class Post
 
     }
 
-    public function editBody(string $body, string $author){
+    public function editBody(string $body, Author $author){
 
         if (! $this->isWrittenByAuthor($author)) {
             
@@ -142,9 +142,9 @@ class Post
 
     }
 
-    public function isWrittenByAuthor($author){
+    public function isWrittenByAuthor($another){
 
-        return $this->author === $author;
+        return $this->author->heIs($another);
 
     }
 

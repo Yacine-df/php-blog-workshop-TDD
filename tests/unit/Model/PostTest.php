@@ -2,6 +2,7 @@
 
 namespace  BlogTest\Unit;
 
+use Blog\Model\Author;
 use Blog\Model\Post;
 use DateTimeImmutable;
 use DomainException;
@@ -15,7 +16,7 @@ class PostTest extends TestCase{
         $title = "php from scratch";
         $body = "the body of the blog";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
@@ -27,7 +28,7 @@ class PostTest extends TestCase{
         $title = "php from scratch";
         $body = "the body of the blog";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::draft($title, $body, $tags, $author);
 
@@ -41,7 +42,7 @@ class PostTest extends TestCase{
         $title = "";
         $body = "the body of the blog";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::draft($title, $body, $tags, $author);
 
@@ -53,7 +54,7 @@ class PostTest extends TestCase{
         $title = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos fugiat blanditiis non in est quam temporibus sapiente eveniet corporis doloremque odit libero, eaque aliquam! Quidem perspiciatis earum accusamus reiciendis id.";
         $body = "the body of the blog";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::draft($title, $body, $tags, $author);
 
@@ -65,7 +66,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::draft($title, $body, $tags, $author);
 
@@ -76,7 +77,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::draft($title, $body, $tags, $author);
 
@@ -93,7 +94,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
@@ -106,7 +107,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
@@ -123,7 +124,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::draft($title, $body, $tags, $author);
 
@@ -136,11 +137,11 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
-        $post->changeTitle('title has been changed','yacine');
+        $post->changeTitle('title has been changed',$author);
 
         $this->assertEquals('title has been changed', $post->getTitle());
 
@@ -151,11 +152,11 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
-        $post->editBody('the body has been edited', 'yacine');
+        $post->editBody('the body has been edited', $author);
 
         $this->assertEquals('the body has been edited', $post->getBody());
 
@@ -168,11 +169,11 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
-        $post->changeTitle('new title here', 'foo');
+        $post->changeTitle('new title here', Author::named('test','df'));
 
 
     }
@@ -184,11 +185,11 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
-        $post->editBody('new body goes here', 'foo');
+        $post->editBody('new body goes here', Author::named('test','df'));
 
 
     }
@@ -198,7 +199,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
         $post->addTag('programming');
@@ -214,7 +215,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code', 'TDD'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
@@ -226,7 +227,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code', 'TDD'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
 
@@ -241,7 +242,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code', 'TDD'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
         $this->assertInstanceOf(DateTimeImmutable::class, $post->getCreatedAt());
@@ -253,7 +254,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code', 'TDD'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::draft($title, $body, $tags, $author);
         $this->assertInstanceOf(DateTimeImmutable::class, $post->getCreatedAt());
@@ -265,7 +266,7 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code', 'TDD'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::draft($title, $body, $tags, $author);
         $post->markAsPublished();
@@ -278,10 +279,10 @@ class PostTest extends TestCase{
         $title = "endis id.";
         $body = "fdfsdf";
         $tags = ['php','db','code', 'TDD'];
-        $author = 'yacine';
+        $author = Author::named('yacine','df');
 
         $post = Post::publish($title, $body, $tags, $author);
-        $post->changeTitle('new title here', 'yacine');
+        $post->changeTitle('new title here', $author);
         $this->assertInstanceOf(DateTimeImmutable::class, $post->getUpdatedAt());
 
     }
